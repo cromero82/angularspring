@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Cliente} from './cliente';
 import {CLIENTES} from './clientes.json';
+import { Observable } from 'rxjs/internal/Observable';
+import { of } from 'rxjs/internal/observable/of';
+//import {Observable} from ''
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ClienteService {
 
   constructor() { }
 
-  getClientes(): Cliente[] {
-    return CLIENTES;
+  getClientes(): Observable<Cliente[]> {
+    return of(CLIENTES);
   }
 }
