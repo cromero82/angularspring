@@ -13,7 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity 
-@Table(name = "cliente")
+@Table(name = "clientes")
 public class Cliente  implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
