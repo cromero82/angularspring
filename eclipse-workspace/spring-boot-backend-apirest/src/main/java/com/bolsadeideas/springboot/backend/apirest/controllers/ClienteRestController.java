@@ -3,8 +3,6 @@ package com.bolsadeideas.springboot.backend.apirest.controllers;
 //import java.util.Date;
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -48,8 +46,8 @@ public class ClienteRestController {
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
-	@PutMapping("/clientes")
-	public Cliente put(@RequestBody Cliente cliente, @PathVariable Long id) {
+	@PutMapping("/clientes/{id}")
+	public Cliente update(@RequestBody Cliente cliente, @PathVariable Long id) {
 		Cliente clienteActual = clienteService.findById(id);
 		clienteActual.setApellido(cliente.getApellido());
 		clienteActual.setNombre(cliente.getNombre());
