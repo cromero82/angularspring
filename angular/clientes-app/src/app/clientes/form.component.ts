@@ -52,4 +52,8 @@ export class FormComponent implements OnInit {
         swal('Cliente ',`Cliente ${cliente.nombre} actualizado con éxito`,'success')
       })
   }
+
+  // delete(cliente: Cliente):void{
+  //
+  // }
 }
