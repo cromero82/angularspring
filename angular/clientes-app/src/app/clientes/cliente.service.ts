@@ -28,4 +28,9 @@ export class ClienteService {
     // alt + 96 comilla sencilla izq
     return this.http.get<Cliente>(`${this.urlEndPoint}/${id}`);
   }
+
+  update(cliente:Cliente): Observable<Cliente>{
+    //return this.http.put<Cliente>(`${this.urlEndPoint}/${cliente.id}`, cliente, {headers: this.httpHeaders})
+    return this.http.put<Cliente>(`${this.urlEndPoint}/${cliente.id}`, cliente, {headers: this.httpHeaders});
+  }
 }
