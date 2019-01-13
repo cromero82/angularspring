@@ -2,7 +2,7 @@
   <div class="card-header">   {{ titulo }}   </div>
   <div class="card-body">
 
-    <form (ngSubmit)="create()" >
+    <form>
 
       <div class="form-group row">
         <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
@@ -26,7 +26,11 @@
       </div>
 <div class="form-group row">
   <div class="col-sm-6">
-    <button class="btn btn-primary" role="button" name="button"> Crear </button>
+    <!-- Si el cliente no existe (es decir !cliente.id) se muestra el boton crear, de lo contrario se ejecuta la plantilla 'elseBlock' -->
+    <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!cliente.id else elseBlock" name="button"> Crear </button>
+    <ng-template #elseBlock>
+      <button class="btn btn-primary" role="button" (click)='update()' name="button"> Editar </button>
+    </ng-template>
   </div>
 </div>
     </form>
