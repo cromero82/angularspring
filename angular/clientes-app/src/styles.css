@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+html{
+  position:relative;
+  min-height: 100%;
+}
+
+body{
+  margin-bottom: 60px; /*   Mismo tamaño del footer */
+}
+
+.mi_wrap{
+  padding-bottom: 0px; /*60px al parecer el estilo de swall lo arreglo y no fue necesario*/
+}
