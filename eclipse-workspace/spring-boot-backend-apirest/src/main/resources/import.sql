@@ -11,10 +11,5 @@ INSERT INTO clientes (nombre, apellido, email, create_at) VALUES ('Dr. James','G
 INSERT INTO clientes (nombre, apellido, email, create_at) VALUES ('Magma','Lee','magma.lee@gmail.gom','2018-03-04');
 INSERT INTO clientes (nombre, apellido, email, create_at) VALUES ('Tornado','Roe','tornado.roe@gmail.com','2018-03-05');
 INSERT INTO clientes (nombre, apellido, email, create_at) VALUES ('Jade','Doe','jade.doe@gmail.com','2018-03-06');
-INSERT INTO clientes (nombre, apellido, email, create_at) VALUES ('John','Vlissides','john.vlissides@gmail.com','2018-02-28');
-INSERT INTO clientes (nombre, apellido, email, create_at) VALUES ('Dr. James','Gosling','jamesgosling@gmail.com','2018-03-03');
-INSERT INTO clientes (nombre, apellido, email, create_at) VALUES ('Magma','Lee','magma.lee@gmail.gom','2018-03-04');
-INSERT INTO clientes (nombre, apellido, email, create_at) VALUES ('Tornado','Roe','tornado.roe@gmail.com','2018-03-05');
-INSERT INTO clientes (nombre, apellido, email, create_at) VALUES ('Jade','Doe','jade.doe@gmail.com','2018-03-06');
 
 --INSERT INTO clientes (nombre, apellido, email, create_at) VALUES ('','','','');
