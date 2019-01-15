@@ -73,7 +73,8 @@ public class ClienteRestController {
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		response.put("mensaje", "El cliente ha sido creado con éxito");		
+		response.put("mensaje", "El cliente ha sido creado con éxito");	
+		response.put("cliente",clienteNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
