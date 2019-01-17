@@ -9,8 +9,8 @@ import swal from 'sweetalert2'
   templateUrl: './form.component.html'
 })
 export class FormComponent implements OnInit {
-  private cliente: Cliente = new Cliente()
-  private titulo:string = "Crear cliente"
+  public cliente: Cliente = new Cliente()
+  public titulo:string = "Crear cliente"
 
   constructor( private clienteService: ClienteService ,
     private router:Router,
