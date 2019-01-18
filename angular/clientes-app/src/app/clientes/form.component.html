@@ -1,3 +1,8 @@
+<ul class="alert alert-danger" *ngIf="errores?.length>0" >
+  <li *ngFor="let err of errores">
+    {{ err }}
+  </li>
+</ul>
 <div class="card bg-dark text-white">
   <div class="card-header"> {{titulo}} </div>
   <div class="card-body">
@@ -7,13 +12,13 @@
       <div class="form-group row">
         <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="cliente.nombre" name="nombre" required minlength="4"  #nombreVar="ngModel">
+          <input type="text" class="form-control" [(ngModel)]="cliente.nombre" name="nombre"  #nombre="ngModel"> <!--  required minlength="4" -->
           <!-- Cuando estamos escribiendo o pierde el focus -->
-          <div class="alert alert-danger" *ngIf="nombreVar.invalid && (nombreVar.dirty || nombreVar.touched)">
-            <div *ngIf="nombreVar.errors.required">
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre?.errors.required">
               Nombre es requerido
             </div>
-            <div *ngIf="nombreVar.errors.minlength">
+            <div *ngIf="nombre?.errors.minlength">
               Nombre debe tener al menos 4 caracteres
             </div>
           </div>
@@ -23,13 +28,13 @@
       <div class="form-group row">
         <label for="" class="col-form-label col-sm-2">Apellido</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="cliente.apellido" name="apellido" required minlength="4" #apellidoVar="ngModel">
+          <input type="text" class="form-control" [(ngModel)]="cliente.apellido" name="apellido"  #apellidoVar="ngModel">
           <!-- Cuando estamos escribiendo o pierde el focus -->
           <div class="alert alert-danger" *ngIf="apellidoVar.invalid && (apellidoVar.dirty || apellidoVar.touched)">
-            <div *ngIf="apellidoVar.errors.required">
+            <div *ngIf="apellidoVar?.errors.required">
               Apellido es requerido
             </div>
-            <div *ngIf="apellidoVar.errors.minlength">
+            <div *ngIf="apellidoVar?.errors.minlength">
               Apellido debe tener al menos 4 caracteres
             </div>
           </div>
@@ -41,13 +46,13 @@
         <div class="col-sm-6">
           <!-- <input type="text" class="form-control" [(ngModel)]="cliente.email" name="email" required> -->
 
-          <input type="text" class="form-control" [(ngModel)]="cliente.email" name="email" required  email #emailVar="ngModel">
+           <input type="text" class="form-control" [(ngModel)]="cliente.email" name="email" #emailVar="ngModel"> <!-- required  email  -->
           <!-- Cuando estamos escribiendo o pierde el focus -->
           <div class="alert alert-danger" *ngIf="emailVar.invalid && (emailVar.dirty || emailVar.touched)">
-            <div *ngIf="emailVar.errors.required">
+            <div *ngIf="emailVar?.errors.required">
               Email es requerido
             </div>
-            <div *ngIf="emailVar.errors.email">
+            <div *ngIf="emailVar?.errors.email">
               Email debe tener un formato válido
             </div>
           </div>
