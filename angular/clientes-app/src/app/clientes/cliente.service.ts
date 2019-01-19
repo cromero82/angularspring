@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {formatDate, /* DatePipe */} from '@angular/common'
 import { Cliente} from './cliente';
 import {CLIENTES} from './clientes.json';
 import { Observable, of, throwError, from } from 'rxjs';
@@ -8,6 +7,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http'
 import {map, catchError} from 'rxjs/operators'
 import swal from 'sweetalert2'
 import {Router} from '@angular/router'
+import { formatDate /* ,DatePipe */ } from '@angular/common';
 
 @Injectable()
 export class ClienteService {
@@ -24,7 +24,7 @@ export class ClienteService {
           cliente.nombre = cliente.nombre.toUpperCase();
           // let datePipe = new DatePipe('en-US')
           // cliente.createAt = datePipe.Transform(cliente.createAt,"dd-MM-yyyy")
-          cliente.createAt = formatDate(cliente.createAt,"dd-MM-yyyy",'en-US')
+          cliente.createAt = formatDate(cliente.createAt,"EEEE, dd, MMMM yyyy",'es')
           return cliente;
         });
       }
