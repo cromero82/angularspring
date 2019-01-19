@@ -24,7 +24,7 @@ export class ClienteService {
           cliente.nombre = cliente.nombre.toUpperCase();
           // let datePipe = new DatePipe('en-US')
           // cliente.createAt = datePipe.Transform(cliente.createAt,"dd-MM-yyyy")
-          cliente.createAt = formatDate(cliente.createAt,"EEEE, dd, MMMM yyyy",'es')
+          // cliente.createAt = formatDate(cliente.createAt,"EEEE, dd, MMMM yyyy",'es')
           return cliente;
         });
       }
