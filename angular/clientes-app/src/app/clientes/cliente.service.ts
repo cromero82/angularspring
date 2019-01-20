@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Cliente} from './cliente';
 import {CLIENTES} from './clientes.json';
-import { Observable, of, throwError, from } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http'
 // import {Observable} from ''
-import {map, catchError} from 'rxjs/operators'
+import {map, catchError, tap} from 'rxjs/operators'
 import swal from 'sweetalert2'
 import {Router} from '@angular/router'
 import { formatDate /* ,DatePipe */ } from '@angular/common';
@@ -18,6 +18,15 @@ export class ClienteService {
   getClientes(): Observable<Cliente[]> {
     // return this.http.get<Cliente[]>(this.urlEndPoint); // otra forma de hacer "cast" a traves de Map
     return this.http.get(this.urlEndPoint).pipe(
+      // Importante el orden el tab obtiene la lista de elementos
+      tap(response => {
+        console.log("ClienteService: tap1")
+        let clientes = response as Cliente[];
+        clientes.forEach( cliente => {
+          console.log(cliente.nombre);
+        })
+      }),
+      // Importante el orden: el map devuelve un objeto de tipo cliente ( por el return)
       map(response => {
         let clientes = response as Cliente[];
         return clientes.map(cliente => {
@@ -28,7 +37,14 @@ export class ClienteService {
           return cliente;
         });
       }
-      )
+      ),
+      // .. orden: el response ya es de tipo cliente (por el map anterior)
+      tap(response => {
+        console.log("ClienteService: tap2")
+        response.forEach( cliente => {
+          console.log(cliente.nombre);
+        })
+      })
     );
   }
 

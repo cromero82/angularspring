@@ -1,61 +1,60 @@
 import { Component, OnInit } from '@angular/core';
-import { Cliente} from './cliente';
+import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
-import swal from 'sweetalert2'
+import swal from 'sweetalert2';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html'
 })
 export class ClientesComponent implements OnInit {
-  clientes: Cliente[]= [];
-  constructor( private clienteService: ClienteService) { }
+
+  clientes: Cliente[];
+
+  constructor(private clienteService: ClienteService) { }
 
   ngOnInit() {
-    this.clienteService.getClientes().subscribe(
-      clientes => this.clientes =clientes
-
-      // clientes => {
-      //   this.clientes = clientes
-      // }
-      // llaves -> mas de una linea de codigo
-
-      // (clientes) =>  ..
-      // ..
-      // parentesis cuando tiene mas de un argumento
-
-      // function (clientes) {
-      //   this.clientes = clientes
-      // }
-      // no work?
-    );
+    this.clienteService.getClientes().pipe(
+      tap(clientes => {
+        console.log('ClientesComponent: tap 3');
+        clientes.forEach(cliente => {
+          console.log(cliente.nombre);
+        });
+      })
+    ).subscribe(clientes => this.clientes = clientes);
   }
 
-  delete(cliente:Cliente):void{
+  delete(cliente: Cliente): void {
     swal({
-  title: 'Esta seguro?',
-  text: `¿Seguro que desea eliminar al cliente ${cliente.nombre}`,
-  type: 'warning',
-  confirmButtonText: 'Si, eliminar!',
-  cancelButtonText: 'No, Cancelar',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33'
-}).then((result) => {
-  if (result.value) {
-    this.clienteService.delete(cliente.id).subscribe(
-      response =>{
-        // para no mostrar el cliente que acabamos de eliminar
-        this.clientes = this.clientes.filter( cli=> cli !== cliente)
-        swal(
-          'Eliminado!',
-          'El cliente ha sido eliminado.',
-          'success'
+      title: 'Está seguro?',
+      text: `¿Seguro que desea eliminar al cliente ${cliente.nombre} ${cliente.apellido}?`,
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar!',
+      cancelButtonText: 'No, cancelar!',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger',
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+
+        this.clienteService.delete(cliente.id).subscribe(
+          () => {
+            this.clientes = this.clientes.filter(cli => cli !== cliente)
+            swal(
+              'Cliente Eliminado!',
+              `Cliente ${cliente.nombre} eliminado con éxito.`,
+              'success'
+            )
+          }
         )
+
       }
-    )
-  }
-})
+    });
   }
 
 }
