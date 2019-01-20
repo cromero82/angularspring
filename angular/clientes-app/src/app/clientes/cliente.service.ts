@@ -15,33 +15,32 @@ export class ClienteService {
   private httpHeaders = new HttpHeaders({'Content-type': 'application/json'})
   constructor(private http: HttpClient, private router: Router) { }
 
-  getClientes(): Observable<Cliente[]> {
+  getClientes(page:number): Observable<Cliente[]> {
     // return this.http.get<Cliente[]>(this.urlEndPoint); // otra forma de hacer "cast" a traves de Map
-    return this.http.get(this.urlEndPoint).pipe(
+    return this.http.get(this.urlEndPoint+'/page/'+ page).pipe(
       // Importante el orden el tab obtiene la lista de elementos
-      tap(response => {
-        console.log("ClienteService: tap1")
-        let clientes = response as Cliente[];
-        clientes.forEach( cliente => {
+      tap((response:any) => {
+        console.log("ClienteService: tap1");
+        (response.content as Cliente[]).forEach( cliente => {
           console.log(cliente.nombre);
         })
       }),
       // Importante el orden: el map devuelve un objeto de tipo cliente ( por el return)
-      map(response => {
-        let clientes = response as Cliente[];
-        return clientes.map(cliente => {
+      map((response:any) => {
+        return (response.content  as Cliente[]).map(cliente => {
           cliente.nombre = cliente.nombre.toUpperCase();
           // let datePipe = new DatePipe('en-US')
           // cliente.createAt = datePipe.Transform(cliente.createAt,"dd-MM-yyyy")
           // cliente.createAt = formatDate(cliente.createAt,"EEEE, dd, MMMM yyyy",'es')
           return cliente;
         });
+        return response;
       }
       ),
       // .. orden: el response ya es de tipo cliente (por el map anterior)
       tap(response => {
-        console.log("ClienteService: tap2")
-        response.forEach( cliente => {
+        console.log("ClienteService: tap2");
+        (response.content as Cliente[]).forEach( cliente => {
           console.log(cliente.nombre);
         })
       })
