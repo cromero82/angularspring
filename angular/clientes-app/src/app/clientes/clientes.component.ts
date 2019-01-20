@@ -20,11 +20,12 @@ export class ClientesComponent implements OnInit {
     .pipe(
       tap(response => {
         console.log('ClientesComponent: tap 3');
-        (response.content as Cliente[]).forEach(cliente => {
-          console.log(cliente.nombre);
-        });
+        (response.content as Cliente[]).forEach(cliente => console.log(cliente.nombre));
       })
-    ).subscribe(response => this.clientes = response.content as Cliente[]);
+    ).subscribe(response => {
+          this.clientes = response.content as Cliente[];
+          //this.paginador = response;
+        });
   }
 
   delete(cliente: Cliente): void {
