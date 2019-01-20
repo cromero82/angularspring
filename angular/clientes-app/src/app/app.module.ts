@@ -15,7 +15,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { FormsModule} from '@angular/forms';
 
 import { registerLocaleData } from '@angular/common';
-import localEs from '@angular/common/locales/es-CO';
+import localEs from '@angular/common/locales/es';
 // import localEs from '@angular/common/locales/es';
 registerLocaleData(localEs, 'Es');
 
