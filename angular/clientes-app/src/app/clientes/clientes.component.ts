@@ -24,7 +24,7 @@ export class ClientesComponent implements OnInit {
       })
     ).subscribe(response => {
           this.clientes = response.content as Cliente[];
-          //this.paginador = response;
+          // this.paginador = response;
         });
   }
 
