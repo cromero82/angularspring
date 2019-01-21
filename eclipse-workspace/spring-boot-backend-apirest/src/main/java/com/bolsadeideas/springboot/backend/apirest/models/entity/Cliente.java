@@ -14,7 +14,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity 
 @Table(name = "clientes")
@@ -38,7 +41,8 @@ public class Cliente  implements Serializable {
 	@Column(nullable=false, unique=true)
 	private String email;
 	
-	@NotEmpty(message="no puede estar vacio")
+	@NotNull(message="no puede estar vacio")
+//	@JsonFormat(shape = JsonFormat.Shape.STRING, locale = "es-CO", timezone = "America/Bogota")
 	@Column(name="create_at")
 	@Temporal(TemporalType.DATE)
 	private Date createAt;
