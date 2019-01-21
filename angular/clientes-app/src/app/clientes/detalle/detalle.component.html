@@ -19,13 +19,13 @@
                     <label class="custom-file-label" for="inputGroupFile04"> Seleccionar foto</label>
                   </div>
                   <div class="input-group-append">
-                    <button (click)="subirFoto()" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Subir</button>
+                    <button  (click)="subirFoto()" class="btn btn-outline-secondary" [disabled]="!fotoSeleccionada" type="button" id="inputGroupFileAddon04">Subir</button>
                   </div>
                 </div>
             </div>
 
         <div class="col-sm">
-          <img *ngIf="cliente.foto" src="http://localhost:8081/api/uploads/img/{{cliente.foto}}" class="img-thumbnail rounded" alt="">
+          <img *ngIf="cliente.foto" src="http://localhost:8081/api/uploads/img/{{cliente.foto}}" class="img-thumbnail rounded" alt="{{ cliente.nombre }}">
         </div>
 
       </div>

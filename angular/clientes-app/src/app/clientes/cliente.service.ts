@@ -97,6 +97,7 @@ export class ClienteService {
     formData.append("archivo", archivo);
     formData.append("id", id);
 
+
     // Utiliza pipe para convertir nuestro observable en tipo <Cliente>
     return this.http.post(`${this.urlEndPoint}/upload`, formData).pipe(
       map( (response:any) => response.cliente as Cliente),
