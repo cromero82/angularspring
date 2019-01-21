@@ -1,6 +1,6 @@
 -- IMPORTANTE. Se tiene que llamar de esta forma "import.sql" ya que SpringBoot va a buscar a traves de Hibernate si existe este archivo y lo ejecutara
 INSERT INTO clientes (nombre, apellido, email, create_at) VALUES ('Andrés','Guzmán','profesor@bolsadeideas.com','2018-01-01');
-INSERT INTO clientes (nombre, apellido, email, create_at) VALUES ('Mr. John','Dpe','john.doe@gmail.com','2018-01-02');
+INSERT INTO clientes (nombre, apellido, email, create_at) VALUES ('Mr. John','Dpe1','john.doe@gmail.com','2018-01-02');
 INSERT INTO clientes (nombre, apellido, email, create_at) VALUES ('Linus','Trovalds','linus.trovalds@gmail.com','2018-01-03');
 INSERT INTO clientes (nombre, apellido, email, create_at) VALUES ('Rasmus','Lerdorf','rasmus.lerdorf@gmail.com','2018-01-04');
 INSERT INTO clientes (nombre, apellido, email, create_at) VALUES ('Erich','Gamma','erich.gamma@gmail.com','2018-02-01');

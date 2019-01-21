@@ -1,6 +1,7 @@
 package com.bolsadeideas.springboot.backend.apirest.controllers;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -8,16 +9,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 //import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -37,6 +43,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bolsadeideas.springboot.backend.apirest.models.entity.Cliente;
 import com.bolsadeideas.springboot.backend.apirest.models.services.IClienteService;
 
+
 @CrossOrigin(origins= {"http://localhost:4200"}) // Configuracion Cors (habilita todos los metodos Get, Post, etc)
 @RestController // por ser un controlador API-REST
 @RequestMapping("/api")	// Url (Endpoint) general
@@ -44,6 +51,8 @@ public class ClienteRestController {
 	
 	@Autowired // inyeccion
 	private IClienteService clienteService;	// Inyecta el services que ya esta en el calificador (como solo tenemos ClienteServiceImple.java) entonces inyecta dicha clase,  si tuviera mas de una se utilizaria un calificador
+
+	//private final Logger log = LoggerFactory.get
 	
 	@GetMapping("/clientes") // URL método actual
 	public List<Cliente> index(){
@@ -223,5 +232,29 @@ public class ClienteRestController {
 		response.put("mensaje", "Archivo vacio ");
 		response.put("error", "Archivo es requerido ");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CHECKPOINT);
+	}
+	
+	@GetMapping("C://spring5//uploads/img/{nombreFoto:.+}")
+//	@GetMapping("/uploads/img/{nombreFoto:.+}")
+	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto) {
+		Path rutaArchivo = Paths.get("C://spring5//uploads").resolve(nombreFoto).toAbsolutePath();
+		Resource recurso = null;
+		
+		try {
+			recurso = new UrlResource(rutaArchivo.toUri());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(!recurso.exists() && !recurso.isReadable()) {
+			throw new RuntimeException("No se pudo cargar la imagaen " + nombreFoto);
+		}
+		
+		// para que se pueda descargar
+		HttpHeaders cabecera = new HttpHeaders();
+		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+ recurso.getFilename() +"\"");
+		
+		return new  ResponseEntity<Resource>(recurso,cabecera, HttpStatus.OK);
 	}
 }
