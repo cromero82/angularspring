@@ -63,16 +63,9 @@
       <div class="form-group row">
           <label for="" class="col-form-label col-sm-2">Fecha</label>
           <div class="col-sm-6">
-            <input type="date" class="form-control" [(ngModel)]="cliente.createAt" name="Fecha"  #FechaVar="ngModel">
-            <!-- Cuando estamos escribiendo o pierde el focus -->
-            <div class="alert alert-danger" *ngIf="FechaVar.invalid && (FechaVar.dirty || FechaVar.touched)">
-              <div *ngIf="FechaVar?.errors.required">
-                Fecha es requerido
-              </div>
-              <div *ngIf="FechaVar?.errors.minlength">
-                Fecha debe tener al menos 4 caracteres
-              </div>
-            </div>
+            <input [matDatepicker]="miDatepicker"  [(ngModel)]="cliente.createAt" name="Fecha" style="display:inline; width: 300px;" >
+            <mat-datepicker-toggle [for]="miDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #miDatepicker></mat-datepicker>
           </div>
         </div>
 
