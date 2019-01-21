@@ -52,9 +52,12 @@ public class ClienteRestController {
 	@Autowired // inyeccion
 	private IClienteService clienteService;	// Inyecta el services que ya esta en el calificador (como solo tenemos ClienteServiceImple.java) entonces inyecta dicha clase,  si tuviera mas de una se utilizaria un calificador
 
-	//private final Logger log = LoggerFactory.get
+	// Implementa un log para ver como se muestra la ruta de archivos
+	private final Logger log = LoggerFactory.getLogger(ClienteRestController.class);
 	
-	@GetMapping("/clientes") // URL método actual
+	private String rutaGeneralArchivos = "uploads"; //"C://spring5//uploads" ;
+	
+	@GetMapping("/clientes") // URL método actualq
 	public List<Cliente> index(){
 		return clienteService.findAll();
 	}
@@ -180,7 +183,7 @@ public class ClienteRestController {
 			// Borra la foto si existe
 			String nombreFotoAnterior = cliente.getFoto();
 			if(nombreFotoAnterior != null && nombreFotoAnterior.length() > 0) {
-				Path rutaFotoAnterior = Paths.get("C://spring5//uploads").resolve(nombreFotoAnterior).toAbsolutePath();
+				Path rutaFotoAnterior = Paths.get(rutaGeneralArchivos).resolve(nombreFotoAnterior).toAbsolutePath();
 				File archivoFotoAnterior = rutaFotoAnterior.toFile();
 				if(archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()) {
 					archivoFotoAnterior.delete();
@@ -204,7 +207,9 @@ public class ClienteRestController {
 		
 		if(!archivo.isEmpty()) {
 			String nombreArchivo = UUID.randomUUID() +"_"+ archivo.getOriginalFilename();
-			Path rutaArchivo = Paths.get("C://spring5//uploads").resolve(nombreArchivo).toAbsolutePath();
+			Path rutaArchivo = Paths.get(rutaGeneralArchivos).resolve(nombreArchivo).toAbsolutePath();
+			log.info(rutaArchivo.toString());
+			
 			try {
 				Files.copy(archivo.getInputStream(), rutaArchivo);				
 			} catch (Exception e) {
@@ -215,7 +220,7 @@ public class ClienteRestController {
 			
 			String nombreFotoAnterior = cliente.getFoto();
 			if(nombreFotoAnterior != null && nombreFotoAnterior.length() > 0) {
-				Path rutaFotoAnterior = Paths.get("C://spring5//uploads").resolve(nombreFotoAnterior).toAbsolutePath();
+				Path rutaFotoAnterior = Paths.get(rutaGeneralArchivos).resolve(nombreFotoAnterior).toAbsolutePath();
 				File archivoFotoAnterior = rutaFotoAnterior.toFile();
 				if(archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()) {
 					archivoFotoAnterior.delete();
@@ -234,10 +239,12 @@ public class ClienteRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CHECKPOINT);
 	}
 	
-	@GetMapping("C://spring5//uploads/img/{nombreFoto:.+}")
-//	@GetMapping("/uploads/img/{nombreFoto:.+}")
+//	@GetMapping("C://spring5//uploads/img/{nombreFoto:.+}")
+	@GetMapping("/uploads/img/{nombreFoto:.+}")
 	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto) {
-		Path rutaArchivo = Paths.get("C://spring5//uploads").resolve(nombreFoto).toAbsolutePath();
+		Path rutaArchivo = Paths.get(rutaGeneralArchivos).resolve(nombreFoto).toAbsolutePath();
+		log.info(rutaArchivo.toString());
+		
 		Resource recurso = null;
 		
 		try {
