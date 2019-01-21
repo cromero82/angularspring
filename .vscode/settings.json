@@ -1,0 +1,27 @@
+{
+    "files.exclude": {
+        "**/angular.json": true,        
+        "**/package-lock.json": true,        
+        "**/.editorconfig": true,        
+        "**/package.json": true,        
+        "**/.angulardoc.json": true,        
+        "**/.package-lock.json": true,        
+        "**/tsconfig.json": true,        
+        "**/readme.txt": true,
+        "**/.gitignore": true,        
+        "**/README.md": true,
+        "**/.vscode/**": true,
+        "**/eclipse-workspace/**": true,
+        "**/node_modules/**": true,
+        "**/e2e/**": true,
+         // SRC
+         "**/assets/**": true,
+         "**/favicon.ico": true,
+         "**/karma.conf.js": true,
+         "**/tsconfig**": true,
+         "**/**.spec.ts**": true,
+         "**/browserslist": true,
+         "**/polyfills.ts": true,
+         "**/test.ts": true,
+    }
+}
