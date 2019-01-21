@@ -21,7 +21,7 @@ import { MatDatepickerModule } from '@angular/material'
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { DetalleComponent } from './clientes/detalle/detalle.component'
 
-registerLocaleData(localEs, 'eS');
+registerLocaleData(localEs, 'es');
 
 const routes: Routes = [
   {path: '', redirectTo: '/clientes', pathMatch:'full'},

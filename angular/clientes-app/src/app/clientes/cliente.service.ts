@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Cliente} from './cliente';
 import {CLIENTES} from './clientes.json';
 import { Observable, of, throwError } from 'rxjs';
-import {HttpClient, HttpHeaders} from '@angular/common/http'
+import {HttpClient, HttpHeaders, HttpRequest, HttpEvent} from '@angular/common/http'
 // import {Observable} from ''
 import {map, catchError, tap} from 'rxjs/operators'
 import swal from 'sweetalert2'
@@ -91,23 +91,18 @@ export class ClienteService {
     );
   }
 
-  subirFoto(archivo:File, id):Observable<Cliente>{
+  subirFoto(archivo:File, id):Observable<HttpEvent<{}>>{
     // Soporte multiPart: FormData
     let formData = new FormData();
     formData.append("archivo", archivo);
     formData.append("id", id);
 
+    const req = new HttpRequest('POST',`${this.urlEndPoint}/upload`, formData, {
+      reportProgress: true
+    });
 
     // Utiliza pipe para convertir nuestro observable en tipo <Cliente>
-    return this.http.post(`${this.urlEndPoint}/upload`, formData).pipe(
-      map( (response:any) => response.cliente as Cliente),
-      catchError( e => {
-        this.router.navigate(['/clientes'])
-        swal('Error al editar', e.error.mensaje, 'error');
-        // retorna el error convertido en un observable
-        return throwError(e);
-      })
-    )
+    return this.http.request(req);
   }
 
 }
