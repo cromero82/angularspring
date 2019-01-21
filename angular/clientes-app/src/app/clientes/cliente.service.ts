@@ -91,4 +91,22 @@ export class ClienteService {
     );
   }
 
+  subirFoto(archivo:File, id):Observable<Cliente>{
+    // Soporte multiPart: FormData
+    let formData = new FormData();
+    formData.append("archivo", archivo);
+    formData.append("id", id);
+
+    // Utiliza pipe para convertir nuestro observable en tipo <Cliente>
+    return this.http.post(`${this.urlEndPoint}/upload`, formData).pipe(
+      map( (response:any) => response.cliente as Cliente),
+      catchError( e => {
+        this.router.navigate(['/clientes'])
+        swal('Error al editar', e.error.mensaje, 'error');
+        // retorna el error convertido en un observable
+        return throwError(e);
+      })
+    )
+  }
+
 }

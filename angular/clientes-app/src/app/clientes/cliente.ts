@@ -4,4 +4,5 @@ export class Cliente{
   nombre: string;
   createAt: string;
   email:string;
+  foto:string;
 }
