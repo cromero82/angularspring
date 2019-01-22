@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
+import { ModalService } from './detalle/modal.service';
 import swal from 'sweetalert2';
 import { tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
@@ -13,29 +14,44 @@ export class ClientesComponent implements OnInit {
 
   clientes: Cliente[];
   paginador: any;
+  clienteSeleccionado: Cliente;
 
   constructor(private clienteService: ClienteService,
+    private modalService: ModalService,
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe( params => {
+    this.activatedRoute.paramMap.subscribe(params => {
       // (+) convierte el string en number
       let page: number = +params.get('page');
-      if(!page){
+      if (!page) {
         page = 0;
       }
       this.clienteService.getClientes(page)
-      .pipe(
-        tap(response => {
-          console.log('ClientesComponent: tap 3');
-          (response.content as Cliente[]).forEach(cliente => console.log(cliente.nombre));
-        })
+        .pipe(
+          tap(response => {
+            console.log('ClientesComponent: tap 3');
+            (response.content as Cliente[]).forEach(cliente => console.log(cliente.nombre));
+          })
         ).subscribe(response => {
-            this.clientes = response.content as Cliente[];
-            this.paginador = response;
+          this.clientes = response.content as Cliente[];
+          this.paginador = response;
         })
     }
     );
+
+    // Se suscribe al notificador (de modal service) luego de actualizarse la foto. el cliente
+    // (dentro del suscribe) ya tiene la foto actuaizada,
+    this.modalService.notificarUpload.subscribe( cliente =>{
+      // ahora se debe recorrer la lista de clientes y actualizar el cliente que ha cambiado la foto
+      this.clientes.map( clienteOriginal => {
+        if(cliente.id == clienteOriginal.id){
+          clienteOriginal.foto = cliente.foto;
+        }
+        // No es necesario (si se quita igual funciona)
+        return clienteOriginal;
+      })
+    })
   }
 
   delete(cliente: Cliente): void {
@@ -68,6 +84,11 @@ export class ClientesComponent implements OnInit {
 
       }
     });
+  }
+
+  abrirModal(cliente: Cliente) {
+    this.clienteSeleccionado = cliente;
+    this.modalService.abrirModal();
   }
 
 }

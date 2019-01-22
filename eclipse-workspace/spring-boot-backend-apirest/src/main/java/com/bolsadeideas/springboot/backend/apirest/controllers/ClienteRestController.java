@@ -255,7 +255,14 @@ public class ClienteRestController {
 		}
 		
 		if(!recurso.exists() && !recurso.isReadable()) {
-			throw new RuntimeException("No se pudo cargar la imagaen " + nombreFoto);
+			rutaArchivo = Paths.get("src/main/resources/static/images").resolve("no-usuario.png").toAbsolutePath();
+			try {
+				recurso = new UrlResource(rutaArchivo.toUri());
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			log.error("No se pudo cargar la imagaen " + nombreFoto);
 		}
 		
 		// para que se pueda descargar
