@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bolsadeideas.springboot.backend.apirest.models.dao.IClienteDao;
 import com.bolsadeideas.springboot.backend.apirest.models.entity.Cliente;
+import com.bolsadeideas.springboot.backend.apirest.models.entity.Region;
 
 @Service		// declaramos esta clase como un componente de servicio de spring (en el contexto), es un estereotipo de component, para que sea un componente del framework
 public class ClienteServiceImpl implements IClienteService {
@@ -47,6 +48,12 @@ public class ClienteServiceImpl implements IClienteService {
 	public void delete(Long id) {
 		clienteDao.deleteById(id);
 		
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Region> findAllRegiones() {
+		return clienteDao.findAllRegiones();
 	}	
 
 }

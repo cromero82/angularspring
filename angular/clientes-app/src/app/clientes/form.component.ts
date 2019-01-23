@@ -3,12 +3,15 @@ import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2'
+import { Region } from './region';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html'
 })
 export class FormComponent implements OnInit {
+
+  regiones: Region[];
   public cliente: Cliente = new Cliente()
   public titulo:string = "Crear cliente"
   errores: String[];
@@ -20,6 +23,7 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
     this.cargarCliente()
+    this.clienteService.getRegiones().subscribe( regiones => this.regiones = regiones);
   }
 
   cargarCliente(): void{
@@ -69,7 +73,10 @@ export class FormComponent implements OnInit {
       })
   }
 
-  // delete(cliente: Cliente):void{
-  //
-  // }
+  // Permite seleccionar la region del listado (select -> option) basado en: 1. el cliente podria tener una region definida,
+  // 2. el metodo trae el listado de todas las regiones
+  // este metodo compara ambos objetos.
+  compararRegion (o1:Region, o2:Region){
+    return o1 === null || o2 == null? false: o1.id === o2.id;
+  }
 }

@@ -8,11 +8,16 @@ import {map, catchError, tap} from 'rxjs/operators'
 import swal from 'sweetalert2'
 import {Router} from '@angular/router'
 import { formatDate /* ,DatePipe */ } from '@angular/common';
+import { Region } from './region';
 
 @Injectable()
 export class ClienteService {
   private urlEndPoint = 'http://localhost:8081/api/clientes'
   private httpHeaders = new HttpHeaders({'Content-type': 'application/json'})
+
+  getRegiones(): Observable<Region[]>{
+     return this.http.get<Region[]>(this.urlEndPoint +'/regiones')
+  }
   constructor(private http: HttpClient, private router: Router) { }
 
   getClientes(page: number): Observable<any> {

@@ -52,7 +52,7 @@ const routes: Routes = [
     MatDatepickerModule,
     MatMomentDateModule
   ],
-  providers: [ ClienteService, {provide: LOCALE_ID, useValue: 'eS' }],
+  providers: [ ClienteService, {provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
