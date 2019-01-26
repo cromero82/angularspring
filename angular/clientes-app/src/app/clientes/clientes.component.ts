@@ -45,7 +45,7 @@ export class ClientesComponent implements OnInit {
     this.modalService.notificarUpload.subscribe( cliente =>{
       // ahora se debe recorrer la lista de clientes y actualizar el cliente que ha cambiado la foto
       this.clientes.map( clienteOriginal => {
-        if(cliente.id == clienteOriginal.id){
+        if(cliente.id === clienteOriginal.id){
           clienteOriginal.foto = cliente.foto;
         }
         // No es necesario (si se quita igual funciona)
