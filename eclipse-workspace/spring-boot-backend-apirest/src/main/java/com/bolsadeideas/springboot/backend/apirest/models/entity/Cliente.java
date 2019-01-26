@@ -10,9 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-//import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,11 +20,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity 
-@Table(name = "clientes")
-public class Cliente  implements Serializable {
+@Table(name="clientes")
+public class Cliente implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -37,12 +34,12 @@ public class Cliente  implements Serializable {
 	private String nombre;
 	
 	@NotEmpty(message="no puede estar vacio")
-	@Size(min= 4, max=12, message="el tamaño tiene que estar entre 4 y 12 caracteres")
-	@Column(nullable=false)
+//	@Size(min= 4, max=12, message="el tamaño tiene que estar entre 4 y 12 caracteres")
+//	@Column(nullable=false)
 	private String apellido;
 	
 	@NotEmpty(message="no puede estar vacio")
-	@Email()
+	@Email(message="no es una dirección de correo bien formada")
 	@Column(nullable=false, unique=true)
 	private String email;
 	

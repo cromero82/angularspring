@@ -1,7 +1,6 @@
 package com.bolsadeideas.springboot.backend.apirest.models.services;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
