@@ -1,0 +1,22 @@
+=====================================================
+-- 	INSTALACION DE CERTIFICADO RSA para firmar JWT
+--	CLASE 124
+=====================================================
+-- https://www.xolphin.com/support/OpenSSL/OpenSSL_-_Installation_under_Windows
+1. descargar openssl (sitio wikie)
+2. instalar (ejecutar instalador)
+3. Open a Command Prompt (CMD) as Administrator
+4. Run the following command:
+5. SET OPENSSL_CONF=C:\OpenSSL-Win32\bin\openssl.cfg
+6. Reboot the computer.
+
+
+-- Crear la clave
+1. go to ubicacion 
+2. generar el certificado, ejemplo "jwt.pem" usando el comando
+	C:\OpenSSL-Win64\bin> openssl genrsa -out jwt.pem
+3. -- Mostrar en la pantalla la llave privada para poder copiar, usamos el comando
+	C:\OpenSSL-Win64\bin> openssl rsa -in jwt.pem
+4. -- Mostrar en la pantalla la llave publica, usamos el comando.
+	C:\OpenSSL-Win64\bin> openssl rsa -in jwt.pem -pubout
+
