@@ -23,8 +23,8 @@ INSERT INTO clientes (region_id, nombre, apellido, email, create_at) VALUES (7,'
 
 /**********			Creamos algunos usuarios con sus roles		*********/
 -- El password esta encriptado por ese motivo no va en esta semilla
-INSERT INTO usuarios (username, password, enabled) VALUES ('andres', '', 1);
-INSERT INTO usuarios (username, password, enabled) VALUES ('admin', '', 1);
+INSERT INTO usuarios (username, password, enabled) VALUES ('andres', '$2a$10$19jWSSA5dzhkrcFKMGoS/uYi96plWSMEzL1DwY.Ncc7JbHquuFrBW', 1);
+INSERT INTO usuarios (username, password, enabled) VALUES ('admin', '$2a$10$RtxFynsp8lAuwOcUI4K06.Ti/M1z9oXmGbcL15NQUz83UJ0CiFy1K', 1);
 
 INSERT INTO roles (nombre) VALUES ('ROLE_USER');
 INSERT INTO roles (nombre) VALUES ('ROLE_ADMIN');
