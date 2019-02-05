@@ -1,5 +1,7 @@
 package com.bolsadeideas.springboot.backend.apirest.auth;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +13,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
@@ -23,6 +26,9 @@ public class AutorizationServerConfig  extends AuthorizationServerConfigurerAdap
 	@Autowired
 	@Qualifier("authenticationManager")
 	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private InfoAdicionalToken InfoAdicionalToken;
 
 	// Los permisos de nuestras rutas de acceso de OUTH2 
 	@Override
@@ -53,12 +59,18 @@ public class AutorizationServerConfig  extends AuthorizationServerConfigurerAdap
 	/// configurar el endpoint, se encarga de todo el proceso de autenticacion y tambien validar el token, realiza la autenticacion general el token y entrega al usuario.
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		// enlazar ambas informaciones, la que viene por defecto mas la nueva
+		TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+		
+		// el metodo accessTokenConverter() retorna el token de JWT
+		tokenEnhancerChain.setTokenEnhancers(Arrays.asList(InfoAdicionalToken, accessTokenConverter()));
 		
 		endpoints.authenticationManager(authenticationManager)
 		// Encargado de manejar el token. almacenar los datos (claims) en el token.
 		// ademas se encarga de codificar (traducir) dichos datos del cliente (claims)
 		.tokenStore(tokenStore())
-		.accessTokenConverter(accessTokenConverter());
+		.accessTokenConverter(accessTokenConverter())
+		.tokenEnhancer(tokenEnhancerChain);
 	}	
 
 	@Bean

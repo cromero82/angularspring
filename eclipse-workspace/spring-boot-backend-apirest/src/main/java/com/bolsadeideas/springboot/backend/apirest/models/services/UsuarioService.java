@@ -19,7 +19,7 @@ import com.bolsadeideas.springboot.backend.apirest.models.dao.IUsuarioDao;
 import com.bolsadeideas.springboot.backend.apirest.models.entity.Usuario;
 
 @Service
-public class UsuarioService implements UserDetailsService{
+public class UsuarioService implements IUsuarioService, UserDetailsService{
 
 	private Logger logger = LoggerFactory.getLogger(UsuarioService.class);
 	
@@ -27,7 +27,7 @@ public class UsuarioService implements UserDetailsService{
 	private IUsuarioDao usuarioDao;
 	
 	@Override
-	@Transactional  
+	@Transactional(readOnly=true) 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Usuario usuario = usuarioDao.findByUsername(username);
 		
@@ -46,6 +46,12 @@ public class UsuarioService implements UserDetailsService{
 				.collect(Collectors.toList());
 		
 		return new User(usuario.getUserName(), usuario.getPassword(), usuario.getEnabled(), true, true, true,authorities);
+	}
+
+	@Override
+	@Transactional(readOnly=true) 
+	public Usuario findByUsername(String username) {		
+		return usuarioDao.findByUsername(username);
 	}
 
 }
