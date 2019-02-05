@@ -5,37 +5,73 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PrePersist;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity 
-@Table(name = "clientes")
-public class Cliente  implements Serializable {
+@Table(name="clientes")
+public class Cliente implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotEmpty(message="no puede estar vacio")
+	@Size(min= 4, max=12, message="el tamaño tiene que estar entre 4 y 12 caracteres")
 	@Column(nullable=false)
 	private String nombre;
 	
+	@NotEmpty(message="no puede estar vacio")
+//	@Size(min= 4, max=12, message="el tamaño tiene que estar entre 4 y 12 caracteres")
+//	@Column(nullable=false)
 	private String apellido;
 	
+	@NotEmpty(message="no puede estar vacio")
+	@Email(message="no es una dirección de correo bien formada")
 	@Column(nullable=false, unique=true)
 	private String email;
 	
+	@NotNull(message="no puede estar vacio")
+//	@JsonFormat(shape = JsonFormat.Shape.STRING, locale = "es-CO", timezone = "America/Bogota")
 	@Column(name="create_at")
 	@Temporal(TemporalType.DATE)
 	private Date createAt;
 	
+	
+	private String foto;
+	
+	@NotNull(message= "la región no puede ser vacia")
+	// Porque son muchos clientes en una region
+	// Con lazy genera unos proxy 
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="region_id")
+	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+	private Region region;
+	
 //	 Antes de persistir (anters de crear) se ejecutara esta funcion
-	@PrePersist
-	public void prePersist() {
-		createAt = new Date();
+//	@PrePersist
+//	public void prePersist() {
+//		createAt = new Date();
+//	}
+	
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 	
 	public Long getId() {
@@ -76,7 +112,16 @@ public class Cliente  implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}	
+	}
+	
+	public Region getRegion() {
+		return region;
+	}
+
+	public void setRegion(Region region) {
+		this.region = region;
+	}
+	
 	/**
 	 * 
 	 */

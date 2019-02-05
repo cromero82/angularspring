@@ -11,3 +11,6 @@ body{
 .mi_wrap{
   padding-bottom: 0px; /*60px al parecer el estilo de swall lo arreglo y no fue necesario*/
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

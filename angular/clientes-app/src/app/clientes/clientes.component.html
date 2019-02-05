@@ -1,3 +1,5 @@
+<detalle-cliente *ngIf="clienteSeleccionado"  [cliente]="clienteSeleccionado"></detalle-cliente>
+
 <div class="card border-primary mb-3">
   <div class="card-header">Clientes</div>
   <div class="card-body text-primary">
@@ -13,7 +15,7 @@
 <table class="table table-bordered table-striped" *ngIf="clientes?.length>0">
   <thead>
     <tr>
-      <th>id</th>
+      <th>#</th>
       <th>nombre</th>
       <th>apellido</th>
       <th>email</th>
@@ -24,11 +26,16 @@
   </thead>
   <tbody>
     <tr *ngFor="let cliente of clientes">
-      <td>{{cliente.id}}</td>
+      <td>
+        <img (click)="abrirModal(cliente)" *ngIf="cliente?.foto" src="http://localhost:8081/api/uploads/img/{{cliente.foto}}" class="img-thumbnail rounded" alt="{{ cliente.nombre }}"
+        style="width: 64px; cursor: pointer;">
+        <img (click)="abrirModal(cliente)" *ngIf="!cliente?.foto" src="http://localhost:8081/images/no-usuario.png" class="img-thumbnail rounded" alt="sin foto"
+        style="width: 64px; cursor: pointer;">
+      </td>
       <td>{{cliente.nombre}}</td>
-      <td>{{cliente.apellido}}</td>
+      <td>{{cliente.apellido | uppercase}}</td>
       <td>{{cliente.email}}</td>
-      <td>{{cliente.createAt}}</td>
+      <td>{{cliente.createAt | date:"EEEE, dd, MMMM yyyy"}}</td>
       <td>
         <button type="button" name="button" [routerLink] = "['/clientes/form',cliente.id]" class="btn btn-primary">Editar</button>
       </td>
@@ -38,6 +45,6 @@
     </tr>
   </tbody>
 </table>
-
+  <paginator-nav *ngIf="paginador"  [paginador]="paginador"></paginator-nav>
   </div>
 </div>
