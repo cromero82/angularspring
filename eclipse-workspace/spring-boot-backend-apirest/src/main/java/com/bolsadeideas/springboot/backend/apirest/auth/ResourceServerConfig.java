@@ -19,7 +19,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/clientes","/api/clientes/page/**","/api/uploads/img/*").permitAll()
 		
 		// ROLE_USER is converted on USER.
-		.antMatchers(HttpMethod.GET, "/api/clientes/{id}").hasAnyRole("USER","ADMIN")
+		/*.antMatchers(HttpMethod.GET, "/api/clientes/{id}").hasAnyRole("USER","ADMIN")
 		
 		// Para upload de fotos
 		.antMatchers(HttpMethod.POST,"/api/clientes/upload").hasAnyRole("USER","ADMIN")
@@ -27,7 +27,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		.antMatchers(HttpMethod.POST, "/api/clientes").hasRole("ADMIN")
 		
 		// aplica para todos los metodos y de clientes en adelante en la url (ejemplo CRUD) y regiones
-		.antMatchers("/api/clientes/**").hasRole("ADMIN")
+		.antMatchers("/api/clientes/**").hasRole("ADMIN")*/
 		
 			.anyRequest().authenticated();
 	}

@@ -20,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -66,6 +67,7 @@ public class ClienteRestController {
 		return resultado;
 	}
 
+	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	//	@ResponseStatus(HttpStatus.OK) (Por default es OK) por ellos se omite
 	@GetMapping("/clientes/{id}") // URL método actual
 	public ResponseEntity<?> show(@PathVariable Long id){
@@ -88,6 +90,7 @@ public class ClienteRestController {
 		return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
 	}
 	
+	@Secured({"ROLE_ADMIN"})
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/clientes")
 	// @Valid: Un interceptor que valida cada parametro del modelo y en caso de error lo asigna a 'result'
@@ -123,6 +126,7 @@ public class ClienteRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
+	@Secured({"ROLE_ADMIN"})
 	@ResponseStatus(HttpStatus.CREATED)
 	@PutMapping("/clientes/{id}")
 	public  ResponseEntity<?> update(@Valid @RequestBody Cliente cliente, @PathVariable Long id, BindingResult result) {
@@ -170,6 +174,7 @@ public class ClienteRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 	
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/clientes/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<?> delete(@PathVariable Long id){
@@ -191,6 +196,7 @@ public class ClienteRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 	
+	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@PostMapping("/clientes/upload")
 	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id){
 		Map<String, Object> response = new HashMap<>();
@@ -239,6 +245,7 @@ public class ClienteRestController {
 		return new  ResponseEntity<Resource>(recurso,cabecera, HttpStatus.OK);
 	}
 	
+	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/clientes/regiones") // URL método actualq
 	public List<Region> listarRegiones(){
 		return clienteService.findAllRegiones();
