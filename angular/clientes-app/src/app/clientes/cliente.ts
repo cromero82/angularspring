@@ -7,5 +7,5 @@ export class Cliente{
   createAt: string;
   email:string;
   foto:string;
-  region:Region
+  region:Region;
 }
