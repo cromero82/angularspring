@@ -38,7 +38,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		// aplica para todos los metodos y de clientes en adelante en la url (ejemplo CRUD) y regiones
 		.antMatchers("/api/clientes/**").hasRole("ADMIN")*/
 		
-			.anyRequest().authenticated();
+			.anyRequest().authenticated().and().cors().configurationSource(corsConfigurationSource());
 	}
 	
 	@Bean

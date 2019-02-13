@@ -110,7 +110,7 @@ export class ClienteService {
         }
 
         this.router.navigate(['/clientes'])
-        swal('Error al editar', e.error.mensaje, 'error');
+        swal('Error al editar ', e.error.mensaje, 'error');
         // retorna el error convertido en un observable
         return throwError(e);
       })
