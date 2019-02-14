@@ -28,11 +28,13 @@ export class LoginComponent implements OnInit {
     }
     this.authService.login(this.usuario).subscribe(response => {
       console.log(response.toString());
-      // contenido del payload (del token) atob (decodificador) convertido a JSON
-      let payload = JSON.parse( atob( response.access_token.split(".")[1]));
-      console.log(payload);
+
+      // guardar informacion del token en el navegador
+      this.authService.guardarUsuario(response.access_token);
+      this.authService.guardarToken(response.access_token);
+      let usuario = this.authService.usuario; // se consume el getter
       this.router.navigate(['/clientes']);
-      swal('Login',`Hola ${payload.user_name}, has iniciado sesión con éxito!`,'success');
+      swal('Login',`Hola ${usuario.username}, has iniciado sesión con éxito! `,'success');
     })
   }
 
