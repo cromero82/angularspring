@@ -1,3 +1,4 @@
+import { AuthService } from '../usuarios/auth.service';
 import { Injectable } from '@angular/core';
 import { Cliente} from './cliente';
 import { Observable, of, throwError } from 'rxjs';
@@ -15,7 +16,7 @@ export class ClienteService {
   private httpHeaders = new HttpHeaders({'Content-type': 'application/json'})
 
   getRegiones(): Observable<Region[]>{
-     return this.http.get<Region[]>(this.urlEndPoint +'/regiones')
+     return this.http.get<Region[]>(this.urlEndPoint +'/regiones', {headers: this.agregarAuthorizationHeader()})
       // MANEJO DE ERROR
       .pipe(
        catchError (e => {
@@ -24,13 +25,27 @@ export class ClienteService {
        })
      );
   }
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private authService:AuthService) { }
 
+  private agregarAuthorizationHeader(){
+    let token = this.authService.token;
+    if( token != null){
+      return this.httpHeaders.append('Authorization','Bearer ' + token);
+    }
+    return this.httpHeaders;
+  }
   private isNoAutorizado(e):boolean{
-    if(e.status === 401 || e.status === 403){
+    if(e.status === 401 ){
       this.router.navigate(['/login']);
       return true;
     }
+
+    if( e.status === 403){
+      swal('Acceso denegado', `Hola ${this.authService.usuario.nombre} no tienes acceso a este recurso!`,'warning');
+      this.router.navigate(['/clientes']);
+      return true;
+    }
+
     return false;
   }
 
@@ -58,7 +73,7 @@ export class ClienteService {
 }
 
   create(cliente: Cliente): Observable<Cliente> {
-    return this.http.post<Cliente>(this.urlEndPoint, cliente, {headers: this.httpHeaders}).pipe(
+    return this.http.post<Cliente>(this.urlEndPoint, cliente, {headers: this.agregarAuthorizationHeader()}).pipe(
       map((response: any) => response.cliente as Cliente),
       catchError( e => {
 
@@ -78,7 +93,7 @@ export class ClienteService {
 
   getCliente(id): Observable<Cliente> {
     // alt + 96 comilla sencilla izq
-    return this.http.get<Cliente>(`${this.urlEndPoint}/${id}`).pipe(
+    return this.http.get<Cliente>(`${this.urlEndPoint}/${id}`, {headers: this.agregarAuthorizationHeader()}).pipe(
       catchError( e => {
 
         if (this.isNoAutorizado(e)){
@@ -98,7 +113,7 @@ export class ClienteService {
 //
   update(cliente: Cliente): Observable<any> {
     // return this.http.put<Cliente>(`${this.urlEndPoint}/${cliente.id}`, cliente, {headers: this.httpHeaders})
-    return this.http.put<Cliente>(`${this.urlEndPoint}/${cliente.id}`, cliente, {headers: this.httpHeaders}).pipe(
+    return this.http.put<Cliente>(`${this.urlEndPoint}/${cliente.id}`, cliente, {headers: this.agregarAuthorizationHeader()}).pipe(
       catchError( e => {
 
         if (this.isNoAutorizado(e)){
@@ -118,7 +133,7 @@ export class ClienteService {
   }
 
   delete(id: number): Observable<Cliente> {
-    return this.http.delete<Cliente>(`${this.urlEndPoint}/${id}`, {headers: this.httpHeaders}).pipe(
+    return this.http.delete<Cliente>(`${this.urlEndPoint}/${id}`, {headers: this.agregarAuthorizationHeader()}).pipe(
       catchError( e => {
 
         if (this.isNoAutorizado(e)){
@@ -139,8 +154,15 @@ export class ClienteService {
     formData.append("archivo", archivo);
     formData.append("id", id);
 
+    let httpHeaders = new HttpHeaders();
+    let token = this.authService.token;
+    if(token != null){
+      httpHeaders = httpHeaders.append('Authorization','Bearer '+ token);
+    }
+
     const req = new HttpRequest('POST',`${this.urlEndPoint}/upload`, formData, {
-      reportProgress: true
+      reportProgress: true,
+      headers: httpHeaders
     });
 
     // Utiliza pipe para convertir nuestro observable en tipo <Cliente>
