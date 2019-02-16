@@ -36,6 +36,11 @@ export class ClienteService {
   }
   private isNoAutorizado(e):boolean{
     if(e.status === 401 ){
+      // Si el token espira, entonces cierra la sesion en angular
+      if(this.authService.isAuthenticated()){
+        this.authService.logout();
+      }
+
       this.router.navigate(['/login']);
       return true;
     }
