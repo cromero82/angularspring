@@ -5,6 +5,7 @@ import { ModalService } from './modal.service';
 import { ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 import { HttpEventType } from '@angular/common/http';
+import { AuthService } from '../../usuarios/auth.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -22,7 +23,7 @@ export class DetalleComponent implements OnInit {
   // Inyecta el clienteServices (acceso a servicios) y activatedRoute cuando cambia el id (dentro del item de la tabla)
   constructor( private clienteService:ClienteService,
     private modalService:ModalService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute, private authService:AuthService) { }
 
   ngOnInit() { }
 
