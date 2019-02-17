@@ -24,7 +24,7 @@ import { DetalleComponent } from './clientes/detalle/detalle.component';
 import { LoginComponent } from './usuarios/login.component'
 import { AuthGuard } from './usuarios/guards/auth.guard';
 
-registerLocaleData(localEs, 'eS');
+registerLocaleData(localEs, 'es');
 
 const routes: Routes = [
   {path: '', redirectTo: '/clientes', pathMatch:'full'},
