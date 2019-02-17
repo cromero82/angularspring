@@ -1,3 +1,4 @@
+import { AuthInterceptor } from './usuarios/interceptors/auth.Interceptor';
 import { RoleGuard } from './usuarios/guards/role.guard';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
@@ -62,6 +63,7 @@ const routes: Routes = [
   providers: [ClienteService,
     { provide: LOCALE_ID, useValue: 'es', },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
