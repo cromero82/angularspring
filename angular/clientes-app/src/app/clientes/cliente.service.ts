@@ -108,6 +108,16 @@ export class ClienteService {
     formData.append("archivo", archivo);
     formData.append("id", id);
 
+    // let httpHeaders = new HttpHeaders();
+    // let token = this.authService.token;
+    // if(token != null){
+    //   httpHeaders = httpHeaders.append('Authorization','Bearer '+ token);
+    // }
+
+    // const req = new HttpRequest('POST',`${this.urlEndPoint}/upload`, formData, {
+    //   reportProgress: true,
+    //   headers: httpHeaders
+    // });
     const req = new HttpRequest('POST',`${this.urlEndPoint}/upload`, formData, {
       reportProgress: true
     });
