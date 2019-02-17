@@ -13,10 +13,10 @@ import { Region } from './region';
 @Injectable()
 export class ClienteService {
   private urlEndPoint = 'http://localhost:8081/api/clientes'
-  private httpHeaders = new HttpHeaders({'Content-type': 'application/json'})
+  constructor(private http: HttpClient, private router: Router, private authService:AuthService) { }
 
   getRegiones(): Observable<Region[]>{
-     return this.http.get<Region[]>(this.urlEndPoint +'/regiones', {headers: this.agregarAuthorizationHeader()})
+     return this.http.get<Region[]>(this.urlEndPoint +'/regiones')
       // MANEJO DE ERROR
       .pipe(
        catchError (e => {
@@ -25,15 +25,7 @@ export class ClienteService {
        })
      );
   }
-  constructor(private http: HttpClient, private router: Router, private authService:AuthService) { }
 
-  private agregarAuthorizationHeader(){
-    let token = this.authService.token;
-    if( token != null){
-      return this.httpHeaders.append('Authorization','Bearer ' + token);
-    }
-    return this.httpHeaders;
-  }
   private isNoAutorizado(e):boolean{
     if(e.status === 401 ){
       // Si el token espira, entonces cierra la sesion en angular
@@ -78,7 +70,7 @@ export class ClienteService {
 }
 
   create(cliente: Cliente): Observable<Cliente> {
-    return this.http.post<Cliente>(this.urlEndPoint, cliente, {headers: this.agregarAuthorizationHeader()}).pipe(
+    return this.http.post<Cliente>(this.urlEndPoint, cliente).pipe(
       map((response: any) => response.cliente as Cliente),
       catchError( e => {
 
@@ -98,7 +90,7 @@ export class ClienteService {
 
   getCliente(id): Observable<Cliente> {
     // alt + 96 comilla sencilla izq
-    return this.http.get<Cliente>(`${this.urlEndPoint}/${id}`, {headers: this.agregarAuthorizationHeader()}).pipe(
+    return this.http.get<Cliente>(`${this.urlEndPoint}/${id}`).pipe(
       catchError( e => {
 
         if (this.isNoAutorizado(e)){
@@ -118,7 +110,7 @@ export class ClienteService {
 //
   update(cliente: Cliente): Observable<any> {
     // return this.http.put<Cliente>(`${this.urlEndPoint}/${cliente.id}`, cliente, {headers: this.httpHeaders})
-    return this.http.put<Cliente>(`${this.urlEndPoint}/${cliente.id}`, cliente, {headers: this.agregarAuthorizationHeader()}).pipe(
+    return this.http.put<Cliente>(`${this.urlEndPoint}/${cliente.id}`, cliente).pipe(
       catchError( e => {
 
         if (this.isNoAutorizado(e)){
@@ -138,7 +130,7 @@ export class ClienteService {
   }
 
   delete(id: number): Observable<Cliente> {
-    return this.http.delete<Cliente>(`${this.urlEndPoint}/${id}`, {headers: this.agregarAuthorizationHeader()}).pipe(
+    return this.http.delete<Cliente>(`${this.urlEndPoint}/${id}`).pipe(
       catchError( e => {
 
         if (this.isNoAutorizado(e)){
