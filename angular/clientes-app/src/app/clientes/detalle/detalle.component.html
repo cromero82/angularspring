@@ -43,11 +43,36 @@
 
             </div>
 
-            <div class="col-sm">
+            <div class="col-sm" >
               <img *ngIf="cliente?.foto" src="http://localhost:8081/api/uploads/img/{{cliente.foto}}" class="img-thumbnail rounded" alt="{{ cliente.nombre }}">
             </div>
 
           </div>
+
+          <div class="row">
+            <div class="alert alert-info my-4" *ngIf="cliente.facturas.length == 0" >
+              No hay facturas asignadas para cliente
+            </div>
+            <table class="table table-bordered table-striped my-4" *ngIf="cliente.facturas.length > 0">
+              <thead>
+                <tr>
+                  <th>Folio</th>
+                  <th>Descripción</th>
+                  <th>Fecha</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let factura of cliente.facturas" >
+                  <td>{{factura.id}}</td>
+                  <td>{{factura.descripcion}}</td>
+                  <td>{{factura.createAt}}</td>
+                  <td>{{factura.total}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
         </div>
 
 

@@ -24,7 +24,8 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { DetalleComponent } from './clientes/detalle/detalle.component';
 import { LoginComponent } from './usuarios/login.component'
 import { AuthGuard } from './usuarios/guards/auth.guard';
-import { TokenInterceptor } from './usuarios/interceptors/token.Interceptor'
+import { TokenInterceptor } from './usuarios/interceptors/token.Interceptor';
+import { DetalleFacturaComponent } from './facturas/detalle-factura.component'
 
 registerLocaleData(localEs, 'es');
 
@@ -49,7 +50,8 @@ const routes: Routes = [
     FormComponent,
     PaginatorComponent,
     DetalleComponent,
-    LoginComponent
+    LoginComponent,
+    DetalleFacturaComponent
   ],
   imports: [
     BrowserModule,
