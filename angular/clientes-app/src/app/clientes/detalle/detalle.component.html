@@ -50,6 +50,10 @@
             </div>
 
             <div class="row">
+              <button type="button" name="button" class="btn btn-success" [routerLink]="['/facturas/form',cliente.id]">Crear factura</button>
+            </div>
+
+            <div class="row">
               <div class="alert alert-info my-4" *ngIf="cliente.facturas.length == 0">
                 No hay facturas asignadas para cliente
               </div>
@@ -71,7 +75,7 @@
                     <td>{{factura.createAt}}</td>
                     <td>{{factura.total}}</td>
                     <td><button class="btn btn-primary btn-sm" type="button" [routerLink]="['/facturas', factura.id]">ver</button></td>
-                    <td><button class="btn btn-danger btn-sm" type="button" (click)="delete(factura)"  >eliminar</button></td>
+                    <td><button class="btn btn-danger btn-sm" type="button" (click)="delete(factura)">eliminar</button></td>
                   </tr>
                 </tbody>
               </table>
