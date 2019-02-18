@@ -10,8 +10,7 @@ import { AuthService } from '../../usuarios/auth.service';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'detalle-cliente',
-  templateUrl: './detalle.component.html',
-  styleUrls: ['./detalle.component.css']
+  templateUrl: './detalle.component.html'
 })
 
 export class DetalleComponent implements OnInit {

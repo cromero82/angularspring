@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-detalle-factura',
-  templateUrl: './detalle-factura.component.html',
-  styleUrls: ['./detalle-factura.component.css']
+  templateUrl: './detalle-factura.component.html'
 })
 export class DetalleFacturaComponent implements OnInit {
 
