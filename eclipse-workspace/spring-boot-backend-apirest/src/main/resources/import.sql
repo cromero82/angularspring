@@ -24,7 +24,7 @@ INSERT INTO clientes (region_id, nombre, apellido, email, create_at) VALUES (7,'
 /**********			Creamos algunos usuarios con sus roles		*********/
 -- El password esta encriptado por ese motivo no va en esta semilla
 INSERT INTO usuarios (username, password, enabled, nombre, apellido, email) VALUES ('andres', '$2a$10$19jWSSA5dzhkrcFKMGoS/uYi96plWSMEzL1DwY.Ncc7JbHquuFrBW', 1,'jhon','guzman','jhonguzman@bolsadeideas');
-INSERT INTO usuarios (username, password, enabled, nombre, apellido, email) VALUES ('admin', '$2a$10$RtxFynsp8lAuwOcUI4K06.Ti/M1z9oXmGbcL15NQUz83UJ0CiFy1K', 1,'jhon','doe','jhondoe@bolsadeideas');
+INSERT INTO usuarios (username, password, CM AKMSÑDKFLASD.,FMASDFAS.DFNSNDFJDSVJZXCCVJZXCLKVXCJVLZKXCVJLKXCNVLKXZCVFASDFJASDJFSDFJSADKLFJASLKDFKASJFASenabled, nombre, apellido, email) VALUES ('admin', '$2a$10$RtxFynsp8lAuwOcUI4K06.Ti/M1z9oXmGbcL15NQUz83UJ0CiFy1K', 1,'jhon','doe','jhondoe@bolsadeideas');
 
 INSERT INTO roles (nombre) VALUES ('ROLE_USER');
 INSERT INTO roles (nombre) VALUES ('ROLE_ADMIN');
@@ -32,3 +32,23 @@ INSERT INTO roles (nombre) VALUES ('ROLE_ADMIN');
 INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (1,1);
 INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (2,2);
 INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (2,1);
+
+/*			Algunos productos		**/
+INSERT INTO productos (nombre, precio, create_at) VALUES ('Panasolic Pantalla LCD', 249990, NOW());
+INSERT INTO productos (nombre, precio, create_at) VALUES ('sONY cAMRA DSC-2320B', 123490, NOW());
+INSERT INTO productos (nombre, precio, create_at) VALUES ('Apple iPod shuffle', 1499990, NOW());
+INSERT INTO productos (nombre, precio, create_at) VALUES ('Sony Notebook Z110', 37990, NOW());
+INSERT INTO productos (nombre, precio, create_at) VALUES ('hEWLETT pACKARD mULTIFUNCIONAL f2280', 69990, NOW());
+INSERT INTO productos (nombre, precio, create_at) VALUES ('Bianchi Bicicleta Aro 26pulg', 69990, NOW());
+INSERT INTO productos (nombre, precio, create_at) VALUES ('Mica Comoda 5 Cajones', 29990, NOW());
+
+/**			Algunas Facturas	 ***/
+INSERT INTO facturas (descripcion, observacion, cliente_id, create_at) VALUES ('Factura equipos de oficina', null, 1, NOW());
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (1,1,1);
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (2,1,4);
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (1,1,5);
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (1,1,7);
+
+INSERT INTO facturas (descripcion, observacion, cliente_id, create_at) VALUES ('Factura Bicicleta','Alguna nota importante!',1,NOW());
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES(3,2,6);
+

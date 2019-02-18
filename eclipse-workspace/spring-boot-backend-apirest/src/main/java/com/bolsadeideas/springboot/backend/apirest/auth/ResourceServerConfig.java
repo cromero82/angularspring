@@ -26,7 +26,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 		// vamor a dar acceso a ApiClientes (permiso a todos)
 		http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/clientes","/api/clientes/page/**","/api/uploads/img/*","/images/**").permitAll()
-		
+		.antMatchers("/api/clientes/{id}").permitAll()
+		.antMatchers("/api/facturas/**").permitAll()
 		// ROLE_USER is converted on USER.
 		/*.antMatchers(HttpMethod.GET, "/api/clientes/{id}").hasAnyRole("USER","ADMIN")
 		

@@ -25,3 +25,18 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+Ultima version de el npm
+npm install -g npm@latest
+borrar cache npm 
+npm cache clean --force
+quitar auditoria 
+npm set audit false
+quitar versiones de angular cli 
+npm unistall -g angular-cli
+npm unistall -g @angular/cli
+instalar la ultima version de angular
+npm install -g @angular/cli@latest
+crear un proyecto nuevo 
+ng new 

@@ -67,7 +67,7 @@ public class ClienteRestController {
 		return resultado;
 	}
 
-	@Secured({"ROLE_ADMIN", "ROLE_USER"})
+	// @Secured({"ROLE_ADMIN", "ROLE_USER"})
 	//	@ResponseStatus(HttpStatus.OK) (Por default es OK) por ellos se omite
 	@GetMapping("/clientes/{id}") // URL método actual
 	public ResponseEntity<?> show(@PathVariable Long id){
